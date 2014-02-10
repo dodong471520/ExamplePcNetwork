@@ -4,6 +4,8 @@ void Sys_Log( char *format,... )
 {
 	va_list args;
 	va_start(args,format);
-	char buff[256];
-	vs
+	char buf[256];
+	vsnprintf(buf,255,format,args);
+	printf("%s\r\n",buf);
+	va_end(args);
 }
