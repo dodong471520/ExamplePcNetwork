@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestPcNetwork", "TestPcNetwork\TestPcNetwork.vcxproj", "{AE99F9F4-83E6-4484-A5ED-B54E7F1F58B9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netlib", "netlib\netlib.vcxproj", "{36BCD39A-9EC7-44DA-884F-AE579E83E4F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{AE99F9F4-83E6-4484-A5ED-B54E7F1F58B9}.Debug|Win32.Build.0 = Debug|Win32
 		{AE99F9F4-83E6-4484-A5ED-B54E7F1F58B9}.Release|Win32.ActiveCfg = Release|Win32
 		{AE99F9F4-83E6-4484-A5ED-B54E7F1F58B9}.Release|Win32.Build.0 = Release|Win32
+		{36BCD39A-9EC7-44DA-884F-AE579E83E4F7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{36BCD39A-9EC7-44DA-884F-AE579E83E4F7}.Debug|Win32.Build.0 = Debug|Win32
+		{36BCD39A-9EC7-44DA-884F-AE579E83E4F7}.Release|Win32.ActiveCfg = Release|Win32
+		{36BCD39A-9EC7-44DA-884F-AE579E83E4F7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

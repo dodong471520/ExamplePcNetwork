@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <memory.h>
+#include <string.h>
+#include <time.h>
 
 void Sys_Log(char *format,...);
 

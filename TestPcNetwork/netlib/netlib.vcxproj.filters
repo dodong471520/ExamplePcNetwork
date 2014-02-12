@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="net_lib_h">
+      <UniqueIdentifier>{d8fc6ec6-2650-4445-8792-2adb7bc5659f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net_lib_c">
+      <UniqueIdentifier>{1cb0f212-8435-4723-a135-3920a23ed51c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TCP.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="net_lib.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread_Pool.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="NET.H">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
+    <ClInclude Include="cfg.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_Packet.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_Session.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP_Socket.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="NET_Packet.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="NET_Session.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="NET_Socket.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread_Pool.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="cfg.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

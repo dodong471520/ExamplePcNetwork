@@ -11,23 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AE99F9F4-83E6-4484-A5ED-B54E7F1F58B9}</ProjectGuid>
+    <ProjectGuid>{36BCD39A-9EC7-44DA-884F-AE579E83E4F7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestPcNetwork</RootNamespace>
+    <RootNamespace>netlib</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <!-- <PlatformToolset>v110</PlatformToolset>  -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <!-- <PlatformToolset>v110</PlatformToolset>  -->
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -41,7 +39,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <EmbedManifest>false</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -78,31 +75,27 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="g_cmdpacket.h" />
-    <ClInclude Include="g_cmdpool.h" />
-    <ClInclude Include="g_netsocket.h" />
-    <ClInclude Include="g_platform.h" />
-    <ClInclude Include="Human.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="cfg.h" />
+    <ClInclude Include="NET.H" />
+    <ClInclude Include="net_lib.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TCP.h" />
+    <ClInclude Include="Thread_Pool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="g_cmdpacket.cpp" />
-    <ClCompile Include="g_cmdpool.cpp" />
-    <ClCompile Include="g_netsocket.cpp" />
-    <ClCompile Include="g_platform.cpp" />
-    <ClCompile Include="Human.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="cfg.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="NET_Packet.cpp" />
+    <ClCompile Include="NET_Session.cpp" />
+    <ClCompile Include="NET_Socket.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="TCP_Packet.cpp" />
+    <ClCompile Include="TCP_Session.cpp" />
+    <ClCompile Include="TCP_Socket.cpp" />
+    <ClCompile Include="Thread_Pool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

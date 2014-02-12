@@ -16,6 +16,9 @@
     <Filter Include="gamelib">
       <UniqueIdentifier>{9b57a899-5a85-40e2-8cbc-01960c04d34b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{08ea8e46-d477-447f-93c0-555ec011236f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -33,12 +36,27 @@
     <ClInclude Include="g_platform.h">
       <Filter>gamelib</Filter>
     </ClInclude>
+    <ClInclude Include="g_cmdpacket.h">
+      <Filter>gamelib</Filter>
+    </ClInclude>
+    <ClInclude Include="g_cmdpool.h">
+      <Filter>gamelib</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="TestPcNetwork.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="g_netsocket.cpp">
@@ -46,6 +64,27 @@
     </ClCompile>
     <ClCompile Include="g_platform.cpp">
       <Filter>gamelib</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmdpacket.cpp">
+      <Filter>gamelib</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmdpool.cpp">
+      <Filter>gamelib</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
