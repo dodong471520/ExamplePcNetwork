@@ -42,6 +42,9 @@
     <ClInclude Include="cfg.h">
       <Filter>net_lib_h</Filter>
     </ClInclude>
+    <ClInclude Include="LOG.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +75,12 @@
       <Filter>net_lib_c</Filter>
     </ClCompile>
     <ClCompile Include="cfg.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="net_lib.cpp">
+      <Filter>net_lib_c</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG.cpp">
       <Filter>net_lib_c</Filter>
     </ClCompile>
   </ItemGroup>

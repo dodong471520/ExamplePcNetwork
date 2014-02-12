@@ -9,7 +9,7 @@
 
 
 
-#define PACKET_CONTENT_POS sizeof(NET_PACKET_HEADER) + 4
+#define PACKET_CONTENT_POS sizeof(NET_PACKET_HEADER) + 2
 struct _PACKET_DATA 
 {
 	uint16	data_len;
@@ -36,10 +36,7 @@ public:
 	void* readData();
 	_PACKET_DATA	readBinary();
 
-	uint16 getVersion() { return ntohs(((NET_PACKET_HEADER *) m_data)->ver); }
 	uint16 getIC()	{return ntohs(((NET_PACKET_HEADER *) m_data)->ic);}
-	uint32 getSID() { return ntohl(((NET_PACKET_HEADER *) m_data)->sid); }
-	uint32 getUID() { return ntohl(((NET_PACKET_HEADER *) m_data)->uid); }
 	uint32 getLen() { return ntohs(((NET_PACKET_HEADER *) m_data)->len); }
 
 	//out packet operation
@@ -49,13 +46,10 @@ public:
 	void writeString(const char *str);
 	void writeData(void* pData, uint16 len);
 
-	void setVersion(uint16 ver) { ((NET_PACKET_HEADER *) m_data)->ver = htons(ver); }
 	void setIC(uint16 ic) { ((NET_PACKET_HEADER *) m_data)->ic = htons(ic); }
-	void setSID(uint32 sid) { ((NET_PACKET_HEADER *) m_data)->sid = htonl(sid); }
-	void setUID(uint32 uid) { ((NET_PACKET_HEADER *) m_data)->uid = htonl(uid); }
 
-	uint16 getCmd() { return ntohs(*((uint16*)(m_data + sizeof(NET_PACKET_HEADER) + 2))); }
-	void setCmd(uint16 cmd) { *((uint16*)(m_data + sizeof(NET_PACKET_HEADER) + 2)) = htons(cmd); }
+	uint16 getCmd() { return ntohs(*((uint16*)(m_data + sizeof(NET_PACKET_HEADER)))); }
+	void setCmd(uint16 cmd) { *((uint16*)(m_data + sizeof(NET_PACKET_HEADER))) = htons(cmd); }
 
 	uint16 getChecker()	{ return ntohs(*((uint16*)(m_data + sizeof(NET_PACKET_HEADER)))); }
 	void setChecker(uint16 ck)	{ *((uint16*)(m_data + sizeof(NET_PACKET_HEADER))) = htons(ck); }
@@ -119,14 +113,8 @@ public:
 		return &m_addr_in;
 	}
 
-private:
-	union
-	{
-		//for in packet
-		sockaddr_in m_addr_in;
-		//for out packet
-		uint32		m_uid_sendto;
-	};
+	//for in packet
+	sockaddr_in m_addr_in;
 
 protected:
 	char* m_data;
@@ -150,7 +138,7 @@ public:
 	//获取接收数据包，数据包由线程分配空间，因此使用完后要删除
 	virtual NET_Packet*	PopRecvPacket();
 
-
+	virtual void Process()=0;
 	virtual void Ping(uint32 uid=0)=0;
 	virtual void CheckConnect(time_t time)=0;
 	virtual uint16 getPort()=0;
@@ -181,8 +169,6 @@ public:
 protected:
 	SOCKET			m_socket;
 	Thread_Pool		m_thread_pool;
-	uint32			m_uid_lmt_min;
-	uint32			m_uid_lmt_max;
 	std::list<NET_Packet*>			m_lst_recv_packet;
 	TYPE_CS							m_lock_recv_packet;
 
@@ -202,9 +188,8 @@ public:
 	void Disconnect();
 	virtual void Ping();
 	virtual void Check_connect(time_t tm);
-	virtual void Connect();
+	virtual bool Connect();
 	virtual bool PushSendPacket(NET_Packet* ptr_packet)=0;
-	virtual bool RunTransfersThread()=0;
 	virtual int	send(NET_Packet* pPacket, bool bIC=false)=0;
 	virtual int	recv(NET_Packet* pPacket)=0;
 	virtual SOCKET get_SOCKET()=0;
@@ -218,11 +203,8 @@ public:
 
 	void setUID_opposite(uint32 uid)	{m_uid_opposite	= uid;}
 
-	uint32			getUID()					{return m_uid;}
-	uint32			getUID_opposite()			{return m_uid_opposite;}
 	NET_Socket*		get_NET_Socket()			{return m_ptr_net_socket;}
 	sockaddr_in*	get_sockaddr_in()			{return &m_addr_in;}
-	Thread_Pool*	get_Thread_Pool()			{return &m_thread_pool;}
 
 	uint32 get_net_delay()			{return m_net_delay;}
 

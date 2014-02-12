@@ -64,8 +64,9 @@ using namespace std;
 #define IOCTLSOCKET(s,c,a)  ioctlsocket(s,c,a)
 #define CONN_INPRROGRESS	WSAEWOULDBLOCK
 typedef int socklen_t;
-
+#ifndef _countof
 #define _countof(array) (sizeof(array)/sizeof(array[0]))
+#endif
 #define VSNPRINTF(a,b,c,d) _vsnprintf(a,b,c,d)
 /* thread operate*/
 #define THREAD_FUNC(func)			DWORD WINAPI func(LPVOID lpParam)
@@ -212,12 +213,9 @@ THREAD_FUNC(thread_close_socket);
 
 #pragma pack(1)
 struct NET_PACKET_HEADER {
-	uint16 ver;
 	uint16 ic;
 	uint16 reserved;
-	uint32 sid;
 	uint16 len;
-	uint32 uid;
 };
 #pragma pack()
 

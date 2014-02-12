@@ -16,9 +16,8 @@ class NET_LIB_API TCP_Session  : public NET_Session
 {
 	friend TCP_Socket;
 public:
-	virtual void Connect();
+	virtual bool Connect();
 	//	void Connect();
-	virtual bool RunTransfersThread();
 	TCP_Socket*		get_TCP_Socket()			{return (TCP_Socket*)m_ptr_net_socket;}
 	SOCKET			get_SOCKET()				{return m_socket;}
 
@@ -29,7 +28,7 @@ public:
 	int				recv(NET_Packet* pPacket);
 	int				send(NET_Packet* pPacket, bool bIC=false);
 
-	TCP_Session(uint32 uid, TCP_Socket* ptr_tcp_socket);
+	TCP_Session(TCP_Socket* ptr_tcp_socket);
 	virtual ~TCP_Session();
 
 protected:
@@ -50,7 +49,6 @@ public:
 	virtual ~TCP_Socket();
 public:
 	void Ping(uint32 uid=0);
-	bool RunTransfersThread();
 	bool change_session_uid(uint32 uid, uint32 uid_to);
 	void CheckConnect(time_t time);
 	uint16 getPort();
@@ -61,6 +59,7 @@ public:
 	int GetSessionCount();
 	void ThreadInit();
 	void ThreadEnd();
+	virtual void Process();
 	//添加发送数据包，因此要发送者分配数据部对象，发送后将由线程自动删除
 	virtual bool		PushSendPacket(uint32 uid_sendto, NET_Packet* ptr_packet);
 
@@ -78,7 +77,7 @@ public:
 
 	virtual void Shutdown();
 	//id在100以内为内部使用
-	bool Create(uint16 port, uint32 uid_limit_min=100, uint32 uid_limit_max=100000);
+	bool Create(uint16 port);
 
 	SOCKET		get_SOCKET()	{return m_socket;}
 
@@ -88,18 +87,16 @@ public:
 	bool LockSessionMap();
 	void UnlockSessionMap();
 
-	void CleanupSessionMap();
+	void CleanupSessionList();
+
+	fd_set				m_readfds;
+	fd_set				m_errfds;
+	fd_set				m_writefds;
 protected:
-
-
-	//	SOCKET			m_socket;
-
-
-	std::map<uint32, TCP_Session*>	m_map_session;
-	TYPE_CS							m_lock_map_session;
-
-
+	std::vector<TCP_Session*> m_list_session;
+	TYPE_CS							m_lock_list_session;
 };
+
 
 
 
