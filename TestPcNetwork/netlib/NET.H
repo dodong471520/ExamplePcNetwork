@@ -177,7 +177,6 @@ protected:
 //网络会话基类
 class NET_LIB_API NET_Session  
 {
-	friend NET_Socket;
 public:
 	void update_ic_image(uint16 last_ic);
 	void clear_ic_image();
@@ -188,7 +187,6 @@ public:
 	void Disconnect();
 	virtual void Ping();
 	virtual void Check_connect(time_t tm);
-	virtual bool Connect();
 	virtual bool PushSendPacket(NET_Packet* ptr_packet)=0;
 	virtual int	send(NET_Packet* pPacket, bool bIC=false)=0;
 	virtual int	recv(NET_Packet* pPacket)=0;
@@ -203,7 +201,6 @@ public:
 
 	void setUID_opposite(uint32 uid)	{m_uid_opposite	= uid;}
 
-	NET_Socket*		get_NET_Socket()			{return m_ptr_net_socket;}
 	sockaddr_in*	get_sockaddr_in()			{return &m_addr_in;}
 
 	uint32 get_net_delay()			{return m_net_delay;}
@@ -212,13 +209,10 @@ public:
 	uint16 getPort() {return ntohs(m_addr_in.sin_port);	}
 
 
-	NET_Session(uint32 uid);
+	NET_Session();
 	virtual ~NET_Session();
 
 protected:
-	uint32			m_uid;
-	uint32			m_uid_opposite;
-	NET_Socket*		m_ptr_net_socket;
 	sockaddr_in		m_addr_in;
 	Thread_Pool		m_thread_pool;
 	time_t			m_time_set;

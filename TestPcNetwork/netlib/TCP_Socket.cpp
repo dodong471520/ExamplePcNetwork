@@ -3,27 +3,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-TCP_Socket::TCP_Socket()
+template<typename T>
+TCP_Socket<T>::TCP_Socket()
 {
+	m_lastTime=0;
 	m_socket=INVALID_SOCKET;
-	INIT_CS(&m_lock_list_session);
+	FD_ZERO( &m_ReadFDs[SELECT_BAK] ) ;
+	FD_ZERO( &m_WriteFDs[SELECT_BAK] ) ;
+	FD_ZERO( &m_ExceptFDs[SELECT_BAK] ) ;
+	FD_ZERO( &m_ReadFDs[SELECT_USE] ) ;
+	FD_ZERO( &m_WriteFDs[SELECT_USE] ) ;
+	FD_ZERO( &m_ExceptFDs[SELECT_USE] ) ;
+
+	m_Timeout[SELECT_BAK].tv_sec = 0;
+	m_Timeout[SELECT_BAK].tv_usec = 0;
 }
-TCP_Socket::~TCP_Socket()
+template<typename T>
+TCP_Socket<T>::~TCP_Socket()
 {
 	Shutdown();
-	DELETE_CS(&m_lock_list_session);
 }
-
-void TCP_Socket::Shutdown()
+template<typename T>
+void TCP_Socket<T>::Shutdown()
 {
-	CleanupSessionList();
+	CleanupAllSession();
 	if(m_socket!=INVALID_SOCKET)
 	{
 		CLOSESOCKET(m_socket);
 		m_socket=INVALID_SOCKET;
 	}
 }
-bool TCP_Socket::Create(uint16 port)
+template<typename T>
+bool TCP_Socket<T>::CreateServer(uint16 port)
 {
 	if(m_socket!=INVALID_SOCKET)
 		Shutdown();
@@ -52,72 +63,72 @@ bool TCP_Socket::Create(uint16 port)
 		m_socket=INVALID_SOCKET;
 		return false;
 	}
+	FD_SET(m_socket,&m_ReadFDs[SELECT_BAK]);
 	return true;
 }
-
-void TCP_Socket::CleanupSessionList()
+template<typename T>
+void TCP_Socket<T>::CreateClient(char const* szAddr,uint16 port)
 {
-	LOCK_CS(&m_lock_list_session);
-	std::vector<TCP_Session*>::iterator it = m_list_session.begin();
-	while(it!=m_list_session.end())
+
+}
+template<typename T>
+void TCP_Socket<T>::CloseSession(TCP_Session *session)
+{
+	std::map<uint32, TCP_Session*>::iterator it = m_map_session.find(session->m_socket);
+	if(it!=m_map_session.end())
 	{
-		TCP_Session* pSession = *it;
+		pSession = it->second;
+		m_map_session.erase(it);
+	}
+	delete session;
+}
+
+template<typename T>
+void TCP_Socket<T>::CleanupAllSession()
+{
+	std::map<SOCKET,T*>::iterator it = m_map_session.begin();
+	while(it!=m_map_session.end())
+	{
+		T* pSession = *it;
 		if(pSession)
 		{
 			pSession->Disconnect();
 			delete(pSession);
 		}
-		m_list_session.erase(it);
-		it = m_list_session.begin();
+		m_map_session.erase(it);
+		it = m_map_session.begin();
 	}
-	UNLOCK_CS(&m_lock_list_session);
 }
-int TCP_Socket::GetSessionCount()
+template<typename T>
+void TCP_Socket<T>::ProcessServer()
 {
-	LOCK_CS(&m_lock_list_session);
-	int ret=m_list_session.size();
-	UNLOCK_CS(&m_lock_list_session);
-	return ret;
-}
+	m_Timeout[SELECT_USE].tv_sec  = m_Timeout[SELECT_BAK].tv_sec;
+	m_Timeout[SELECT_USE].tv_usec = m_Timeout[SELECT_BAK].tv_usec;
+	m_ReadFDs[SELECT_USE]   = m_ReadFDs[SELECT_BAK];
+	m_WriteFDs[SELECT_USE]  = m_WriteFDs[SELECT_BAK];
+	m_ExceptFDs[SELECT_USE] = m_ExceptFDs[SELECT_BAK];
 
-void TCP_Socket::Process()
-{
-	timeval timeout;
-	timeout.tv_sec=0;
-	timeout.tv_usec=0;
-	FD_ZERO(&m_readfds);
-	FD_ZERO(&m_errfds);
-	FD_ZERO(&m_writefds);
-	FD_SET(m_socket,&m_readfds);
-	LOCK_CS(&m_lock_list_session);
-	for(int i=0;i<m_list_session.size();++i)
-	{
-		FD_SET(m_list_session[i]->m_socket,&m_readfds);
-		FD_SET(m_list_session[i]->m_socket,&m_writefds);
-		FD_SET(m_list_session[i]->m_socket,&m_errfds);
-	}
-	UNLOCK_CS(&m_lock_list_session);
-	int ret = select(FD_SETSIZE,&m_readfds,&m_writefds,&m_errfds,&timeout);
+	int ret = select(FD_SETSIZE,&m_ReadFDs[SELECT_USE],&m_WriteFDs[SELECT_USE],&m_ExceptFDs[SELECT_USE],&m_Timeout[SELECT_USE]);
 	if(ret > 0)
 	{
-		if(FD_ISSET(m_socket,&m_readfds))
-			CreateSession(0,0);
+		//创建会话
+		if(FD_ISSET(m_socket,&m_ReadFDs[SELECT_USE]))
+			CreateSession();
 		NET_Packet*	ptr_recv_packet	= new NET_Packet;
-		for(int i=0;i<GetSessionCount();++i)
+		std::map<SOCKET,T*>::iterator it;
+		for(it=m_map_session.begin();it!=m_map_session.end();)
 		{
-			LOCK_CS(&m_lock_list_session);
-			TCP_Session* session=m_list_session[i];
-			UNLOCK_CS(&m_lock_list_session);
-			//if(FD_ISSET(m_list_session[i]->m_socket,&m_errfds))
-			//	CloseSession(m_list_session[i]);
-			if(FD_ISSET(session->m_socket,&m_writefds))
+			T* session=*it;
+			it++;
+			//发送数据包
+			if(FD_ISSET(session->m_socket,&m_WriteFDs[SELECT_USE]))
 			{
-				//send request packet
-				NET_Packet* packet=session->PopSendPacket();
+				NET_Packet *packet=session->PopSendPacket();
 				if(packet)
 					session->send(packet);
 			}
-			if(FD_ISSET(session->m_socket,&m_readfds))
+			//收到数据包
+			if(FD_ISSET(session->m_socket,&m_ReadFDs[SELECT_USE]))
 			{
 				int recv_size = ptr_recv_packet->recv(session->get_SOCKET());
 				if(recv_size>0)
@@ -129,8 +140,11 @@ void TCP_Socket::Process()
 						ptr_recv_packet	= pPacket->get_cling_packet();
 						if(pPacket->getCmd()==NLIBP_CONNECT)
 							session->time_set(Sys_GetTime());
-						if(session->get_TCP_Socket()->PushRecvPacket(pPacket, Sys_GetTime()))
+						if(session->PushRecvPacket(pPacket, Sys_GetTime()))
+						{
+							//处理接收到的消息
 							continue;
+						}
 						delete(pPacket);
 					}
 					if(ptr_recv_packet==NULL)
@@ -139,72 +153,48 @@ void TCP_Socket::Process()
 			}
 		}
 	}
-}
-
-
-bool		TCP_Socket::PushRecvPacket(NET_Packet* ptr_packet, time_t time)
-{
-	if(ptr_packet==NULL)
-		return false;
-	return NET_Socket::PushRecvPacket(ptr_packet, time);
-}
-
-TCP_Session* TCP_Socket::CreateSession(uint32 ip, uint16 port, const char* szAddr)
-{
-	TCP_Session* pRet	= NULL;
-	if(ip==0 && port==0)
-	{//accept a connect
-		pRet	= new TCP_Session(this);
-		if(pRet==NULL)
-			return NULL;
-		int len = sizeof(pRet->get_sockaddr_in());
-		pRet->m_socket = accept(m_socket, (SOCKADDR *)&(pRet->m_addr_in), (socklen_t *)&len);
-		if (pRet->m_socket == INVALID_SOCKET || pRet->m_socket == NULL)
-		{
-			delete(pRet);
-			Sys_Log("net_lib_log", "accept error");
-			return NULL;
-		}
-		LOCK_CS(&m_lock_list_session);
-		m_list_session.push_back(pRet);
-		UNLOCK_CS(&m_lock_list_session);
-		pRet->NET_Session::Connect();
+	//心跳
+	time_t t= Sys_GetTime();
+	if(m_lastTime==0)
+		m_lastTime=t;
+	if(t - m_lastTime>=1000)
+	{
+		CheckConnect(t);
+		m_lastTime = t;
 	}
-	else
-	{//make connect
-		pRet	= new TCP_Session(this);
-		if(pRet==NULL)
-			return NULL;
-		sockaddr_in*	p_addr =	pRet->get_sockaddr_in();
-		memset(p_addr, 0, sizeof(sockaddr_in));
-		p_addr->sin_family = AF_INET;
-		p_addr->sin_port = htons(port);
-		if(szAddr)
-			p_addr->sin_addr.s_addr = inet_addr(szAddr);
-		else
-			p_addr->sin_addr.s_addr = htonl(ip);
-		if(p_addr->sin_addr.s_addr==INADDR_NONE)
-		{
-			hostent *host=NULL;
-			if(!szAddr) 
-			{
-				delete(pRet);
-				return NULL;
-			}
-			host=gethostbyname(szAddr);
-			if(!host) 
-			{
-				delete(pRet);
-				return NULL;
-			}
-			memcpy(&p_addr->sin_addr,host->h_addr_list[0],host->h_length);
-		}
-		if(!pRet->Connect())
-			return NULL;
-		LOCK_CS(&m_lock_list_session);
-		m_list_session.push_back(pRet);
-		UNLOCK_CS(&m_lock_list_session);
+}
+template<typename T>
+T* TCP_Socket<T>::CreateSession()
+{
+	T* pRet	= new T;
+	//accept a connect
+	if(pRet==NULL)
+		return NULL;
+	int len = sizeof(pRet->get_sockaddr_in());
+	pRet->m_socket = accept(m_socket, (SOCKADDR *)&(pRet->m_addr_in), (socklen_t *)&len);
+	if (pRet->m_socket == INVALID_SOCKET || pRet->m_socket == NULL)
+	{
+		delete(pRet);
+		Sys_Log("net_lib_log", "accept error");
+		return NULL;
 	}
+	m_map_session.insert(make_pair((SOCKET)pRet->m_socket,pRet));
 	pRet->time_set(Sys_GetTime());
+	FD_SET(pRet->m_socket , &m_ReadFDs[SELECT_BAK]);
+	FD_SET(pRet->m_socket , &m_WriteFDs[SELECT_BAK]);
+	FD_SET(pRet->m_socket , &m_ExceptFDs[SELECT_BAK]);
 	return pRet;
+}
+template<typename T>
+void TCP_Socket<T>::CheckConnect(time_t time)
+{
+	if(m_socket<=0)
+		return;
+	std::map<SOCKET, T*>::iterator it = m_map_session.begin();
+	while(it!=m_map_session.end())
+	{
+		if(it->second)
+			it->second->Check_connect(time);
+		it++;
+	}
 }

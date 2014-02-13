@@ -160,7 +160,8 @@ class NET_Session;
 class NET_Socket;
 
 class TCP_Session;
-class TCP_Socket;
+template<typename T>
+class TCP_Socket<T>;
 
 class UDP_Session;
 class UDP_Socket;

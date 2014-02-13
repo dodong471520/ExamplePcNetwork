@@ -22,6 +22,7 @@
 #include "tcp.h"
 //#include "NDES.H"
 //#include "zlib.h"
+#include "SmartPointer.h"
 
 
 

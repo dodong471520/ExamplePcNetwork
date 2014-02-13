@@ -45,6 +45,9 @@
     <ClInclude Include="LOG.h">
       <Filter>net_lib_h</Filter>
     </ClInclude>
+    <ClInclude Include="SmartPointer.h">
+      <Filter>net_lib_h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

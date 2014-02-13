@@ -76,3 +76,124 @@ NET_Packet* NET_Packet::get_cling_packet()
 	return pRet;
 
 }
+
+
+void NET_Packet::write8(uint8 b)
+{
+	if (m_cursor <= m_data + m_max_data_size - sizeof(b)) 
+	{
+		*(uint8 *) m_cursor = b;
+		m_cursor += sizeof(b);
+	}
+}
+
+void NET_Packet::write16(uint16 w)
+{
+	if (m_cursor <= m_data + m_max_data_size - sizeof(w)) 
+	{
+		*(uint16 *) m_cursor = htons(w);
+		m_cursor += sizeof(w);
+	}
+}
+
+void NET_Packet::write32(uint32 dw)
+{
+	if (m_cursor <= m_data + m_max_data_size - sizeof(dw)) 
+	{
+		*(uint32 *) m_cursor = htonl(dw);
+		m_cursor += sizeof(dw);
+	}
+}
+
+void NET_Packet::writeString(const char *str)
+{
+	uint16 len = strlen(str) + 1;
+	if (m_cursor <= m_data + m_max_data_size - sizeof(len) - len) 
+	{
+		write16(len);
+		strcpy(m_cursor, str);
+		m_cursor += len;
+	}
+}
+
+
+void NET_Packet::writeData(void* pData, uint16 len)
+{
+	if (m_cursor <= m_data + m_max_data_size - sizeof(len) - len) 
+	{
+		write16(len);
+		memcpy(m_cursor, pData, len);
+		m_cursor += len;
+	}
+}
+
+
+uint8 NET_Packet::read8()
+{
+	uint8 b = 0;
+	if (m_cursor <= m_data + m_datalen  - sizeof(uint8)) 
+	{
+		b = *m_cursor;
+		m_cursor += sizeof(b);
+	}
+	return b;
+}
+
+uint16 NET_Packet::read16()
+{
+	uint16 w = 0;
+	if (m_cursor <= m_data + m_datalen - sizeof(w)) 
+	{
+		w = ntohs(*(uint16 *) m_cursor);
+		m_cursor += sizeof(w);
+	}
+	return w;
+}
+
+uint32 NET_Packet::read32()
+{
+	uint32 dw = 0;
+	if (m_cursor <= m_data + m_datalen - sizeof(dw)) 
+	{
+		dw = ntohl(*(uint32 *) m_cursor);
+		m_cursor += sizeof(uint32);
+	}
+	return dw;
+}
+
+const char *NET_Packet::readString()
+{
+	const char *str = NULL;
+	uint16 len = read16();
+	if (m_cursor <= m_data + m_datalen - len && !m_cursor[len - 1]) 
+	{
+		str = m_cursor;
+		m_cursor += len;
+	}
+	return str;
+}
+
+void* NET_Packet::readData()
+{
+	uint16 len = read16();
+	void* str = NULL;
+	if (m_cursor <= m_data + m_datalen - len) 
+	{
+		str = m_cursor;
+		m_cursor += len;
+	}
+	return str;
+}
+
+_PACKET_DATA NET_Packet::readBinary()
+{
+	_PACKET_DATA	ret;
+	ret.data_len = read16();
+	if (m_cursor <= m_data + m_datalen - ret.data_len) 
+	{
+		ret.ptr_data = m_cursor;
+		m_cursor += ret.data_len;
+	}
+	return ret;
+
+}

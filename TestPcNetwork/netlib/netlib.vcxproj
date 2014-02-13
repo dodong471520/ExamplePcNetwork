@@ -81,6 +81,7 @@
     <ClInclude Include="LOG.h" />
     <ClInclude Include="NET.H" />
     <ClInclude Include="net_lib.h" />
+    <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TCP.h" />
     <ClInclude Include="Thread_Pool.h" />
