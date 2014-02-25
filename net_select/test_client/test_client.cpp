@@ -66,6 +66,12 @@ public:
 		return 0;
 	}
 
+	void sendWord(char const* word)
+	{
+		char* total_msg=new char[MSGHEADERLEN+strlen(word)];
+		
+		onSend_(index, serial, total_msg, MSGHEADERLEN+msg_header->len);
+	}
 private:
 	OnSendCallback onSend_;
 };
