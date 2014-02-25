@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string>
 #include "io_service.h"
-
+#include "yy_thread.h"
 USING_NS_YY
 //#pragma comment(lib, "libbase.lib")
 #pragma comment(lib, "ws2_32.lib")
@@ -18,7 +18,7 @@ class NetEvent
 private:
 	typedef FastDelegate4<UI32, UI64, const char*, UI32> OnSendCallback;
 public:
-	NetEvent(){}
+	NetEvent():m_index(-1){}
 
 	void registerOnSend(OnSendCallback onSend)
 	{
@@ -28,12 +28,15 @@ public:
 	//iocp thread or select io thread
 	void onCon(UI32 index, UI64 serial, const char* ip, UI32 port)
 	{
+		m_index=index;
+		m_serial=serial;
 		printf("new connection, index:%d, serial:%llu, ip:%s, port:%d\n",index, serial, ip, port);
 	}
 
 	//io thread
 	void onDisCon(UI32 index, UI64 serial, const char* ip, UI32 port)
 	{
+		m_index=-1;
 		printf("disconnection, index:%d, serial:%llu, ip:%s, port:%d\n",index, serial, ip, port);
 	}
 
@@ -66,8 +69,25 @@ public:
 
 		return 0;
 	}
-
+	void thread_console()
+	{
+		while(true)
+		{
+			char str[256];
+			scanf("%s",str);
+			if(m_index==-1)
+				continue;
+			MsgHeader header;
+			header.len=strlen(str);
+			char buff[256];
+			memcpy(buff,&header,MSGHEADERLEN);
+			sprintf(buff+MSGHEADERLEN,str);
+			onSend_(m_index, m_serial,buff,MSGHEADERLEN+header.len);
+		}
+	}
 private:
+	UI32 m_index;
+	UI64 m_serial;
 	OnSendCallback onSend_;
 };
 
@@ -80,7 +100,8 @@ int main()
 		MakeDelegate(&net_event, &NetEvent::onRead));
 
 	net_event.registerOnSend(MakeDelegate(io_service, &IOService::send));
-
+	Thread thread(MakeDelegate(&net_event,&NetEvent::thread_console));
+	thread.open(1);
 	UI32 nCount=0;
 	int ret=1;
 	io_service->listen("127.0.0.1", 5001);
