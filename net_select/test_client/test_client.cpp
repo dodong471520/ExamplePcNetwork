@@ -27,7 +27,7 @@ public:
 	int onCon(UI32 index, UI64 serial, const char* ip, UI32 port)
 	{
 		printf("new connection, index:%d, serial:%llu, ip:%s, port:%d",index, serial, ip, port);
-		onSend_(index, serial, total_msg, MSGHEADERLEN+msg_header->len);
+		sendWord(index, serial, "i am client");
 		return 0;
 	}
 
@@ -66,11 +66,14 @@ public:
 		return 0;
 	}
 
-	void sendWord(char const* word)
+	void sendWord(UI32 index,UI64 serial,char const* word)
 	{
 		char* total_msg=new char[MSGHEADERLEN+strlen(word)];
-		
-		onSend_(index, serial, total_msg, MSGHEADERLEN+msg_header->len);
+		MsgHeader head;
+		head.len=strlen(word);
+		memcpy(total_msg,&head,sizeof(MsgHeader));
+		memcpy(total_msg+sizeof(MsgHeader),word,strlen(word));
+		onSend_(index, serial, total_msg,MSGHEADERLEN+head.len);
 	}
 private:
 	OnSendCallback onSend_;

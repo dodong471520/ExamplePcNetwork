@@ -203,7 +203,7 @@ void SelectIOService::eventLoop()
 		if(listen_socket_ != INVALID_SOCKET)
 		{
 			//有新连接
-			if(FD_ISSET(listen_socket_, &read_set_))
+			if(FD_ISSET(listen_socket_, &read_set_[SELECT_USE]))
 			{
 				sockaddr_in clientAddr;
 				int nClientLen = sizeof(sockaddr_in);
@@ -235,7 +235,7 @@ void SelectIOService::eventLoop()
 			peer* p=peer_manager_.getPeer(index);
 
 			//读事件
-			if(FD_ISSET(p->socket, &read_set_))
+			if(FD_ISSET(p->socket, &read_set_[SELECT_USE]))
 			{
 				int ret=p->read_buf.sockRead(p->socket);
 				if(ret!=0)
@@ -254,7 +254,7 @@ void SelectIOService::eventLoop()
 			}
 
 			//写事件
-			if(FD_ISSET(p->socket, &write_set_))
+			if(FD_ISSET(p->socket, &write_set_[SELECT_USE]))
 			{
 				int ret=p->write_buf.sockWrite(p->socket);
 				if(ret != 0)
