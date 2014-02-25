@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="libnet">
+      <UniqueIdentifier>{2e791470-fa65-48fd-b94e-2333fa9245c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libnet\src">
+      <UniqueIdentifier>{38bb9d6b-7b80-4a36-9f0e-7b201fb05a2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libnet\export">
+      <UniqueIdentifier>{b02d2bf2-bac9-4b37-9406-f1b29d99c690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libnet\libbase">
+      <UniqueIdentifier>{28e1176c-f484-458c-8e05-d7e4998de5fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libnet\libbase\export">
+      <UniqueIdentifier>{71811516-e88e-4f31-b694-8e6ae2b62970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libnet\libbase\src">
+      <UniqueIdentifier>{18f871ee-84c6-403a-b351-be68e35b5fec}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\io_service.cpp">
+      <Filter>libnet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\peer_manager.cpp">
+      <Filter>libnet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sockbuf.cpp">
+      <Filter>libnet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Win_IOCP_io_service.cpp">
+      <Filter>libnet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\..\libbase\src\yy_file.cpp">
+      <Filter>libnet\libbase\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libbase\src\yy_log.cpp">
+      <Filter>libnet\libbase\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libbase\src\yy_memory.cpp">
+      <Filter>libnet\libbase\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libbase\src\yy_thread.cpp">
+      <Filter>libnet\libbase\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libbase\src\yy_time.cpp">
+      <Filter>libnet\libbase\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libbase\src\yy_utility.cpp">
+      <Filter>libnet\libbase\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\peer_manager.h">
+      <Filter>libnet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\socket_wrap.h">
+      <Filter>libnet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Win_IOCP_io_service.h">
+      <Filter>libnet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\io_service.h">
+      <Filter>libnet\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\sockbuf.h">
+      <Filter>libnet\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\FastDelegate.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\FastDelegateBind.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_algorithm.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_bstree.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_dump.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_exception.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_file.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_freelist.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_log.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_macros.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_memory.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_queue.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_synchronize.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_thread.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_time.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libbase\export\yy_utility.h">
+      <Filter>libnet\libbase\export</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\readme.txt" />
+  </ItemGroup>
+</Project>

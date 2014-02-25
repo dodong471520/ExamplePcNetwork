@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbase", "libbase\proj.win32\libbase.vcproj", "{C377C841-585E-499D-B6DE-17F7D975F4E0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnet", "libnet\proj.win32\libnet.vcproj", "{0ED2427B-CC17-4D7A-973B-E3E47813B069}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C377C841-585E-499D-B6DE-17F7D975F4E0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C377C841-585E-499D-B6DE-17F7D975F4E0}.Debug|Win32.Build.0 = Debug|Win32
+		{C377C841-585E-499D-B6DE-17F7D975F4E0}.Release|Win32.ActiveCfg = Release|Win32
+		{C377C841-585E-499D-B6DE-17F7D975F4E0}.Release|Win32.Build.0 = Release|Win32
+		{0ED2427B-CC17-4D7A-973B-E3E47813B069}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0ED2427B-CC17-4D7A-973B-E3E47813B069}.Debug|Win32.Build.0 = Debug|Win32
+		{0ED2427B-CC17-4D7A-973B-E3E47813B069}.Release|Win32.ActiveCfg = Release|Win32
+		{0ED2427B-CC17-4D7A-973B-E3E47813B069}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

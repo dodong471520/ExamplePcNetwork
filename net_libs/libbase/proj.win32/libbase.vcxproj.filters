@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="export">
+      <UniqueIdentifier>{947bbfe9-e2e3-4d9f-a7a9-992e01e4ed47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{f1752ed6-b912-4b52-aabb-88fa3ebd51eb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\export\FastDelegate.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\FastDelegateBind.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_algorithm.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_bstree.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_dump.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_exception.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_file.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_freelist.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_log.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_macros.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_memory.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_queue.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_synchronize.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_thread.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_time.h">
+      <Filter>export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\yy_utility.h">
+      <Filter>export</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\yy_file.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\yy_log.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\yy_memory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\yy_thread.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\yy_time.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\yy_utility.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\readme.txt" />
+  </ItemGroup>
+</Project>
