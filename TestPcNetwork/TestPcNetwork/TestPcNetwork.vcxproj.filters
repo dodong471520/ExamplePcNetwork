@@ -54,6 +54,15 @@
     <ClInclude Include="Matrix.h">
       <Filter>object</Filter>
     </ClInclude>
+    <ClInclude Include="g_tcpsession.h">
+      <Filter>gamelib</Filter>
+    </ClInclude>
+    <ClInclude Include="g_netpacket.h">
+      <Filter>gamelib</Filter>
+    </ClInclude>
+    <ClInclude Include="g_tcplistener.h">
+      <Filter>gamelib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -85,6 +94,15 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="g_tcpsession.cpp">
+      <Filter>gamelib</Filter>
+    </ClCompile>
+    <ClCompile Include="g_netpacket.cpp">
+      <Filter>gamelib</Filter>
+    </ClCompile>
+    <ClCompile Include="g_tcplistener.cpp">
+      <Filter>gamelib</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

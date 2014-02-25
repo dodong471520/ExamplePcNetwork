@@ -11,25 +11,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AE99F9F4-83E6-4484-A5ED-B54E7F1F58B9}</ProjectGuid>
+    <ProjectGuid>{66D7EADD-1668-49F7-AF7B-14E55D76AEA9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestPcNetwork</RootNamespace>
+    <RootNamespace>TestPcNetWorkClient</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v110</PlatformToolset>
-    <!-- <PlatformToolset>v110</PlatformToolset>  -->
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
-    <!-- <PlatformToolset>v110</PlatformToolset>  -->
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -43,7 +41,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <EmbedManifest>false</EmbedManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,6 +51,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -68,6 +66,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -77,35 +76,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="g_cmdpacket.h" />
-    <ClInclude Include="g_cmdpool.h" />
-    <ClInclude Include="g_netpacket.h" />
-    <ClInclude Include="g_netsocket.h" />
-    <ClInclude Include="g_platform.h" />
-    <ClInclude Include="g_tcplistener.h" />
-    <ClInclude Include="g_tcpsession.h" />
-    <ClInclude Include="Human.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="..\TestPcNetwork\g_cmdpacket.h" />
+    <ClInclude Include="..\TestPcNetwork\g_cmdpool.h" />
+    <ClInclude Include="..\TestPcNetwork\g_netpacket.h" />
+    <ClInclude Include="..\TestPcNetwork\g_netsocket.h" />
+    <ClInclude Include="..\TestPcNetwork\g_platform.h" />
+    <ClInclude Include="..\TestPcNetwork\g_tcplistener.h" />
+    <ClInclude Include="..\TestPcNetwork\g_tcpsession.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="g_cmdpacket.cpp" />
-    <ClCompile Include="g_cmdpool.cpp" />
-    <ClCompile Include="g_netpacket.cpp" />
-    <ClCompile Include="g_netsocket.cpp" />
-    <ClCompile Include="g_platform.cpp" />
-    <ClCompile Include="g_tcplistener.cpp" />
-    <ClCompile Include="g_tcpsession.cpp" />
-    <ClCompile Include="Human.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_cmdpacket.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_cmdpool.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_netpacket.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_netsocket.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_platform.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_tcplistener.cpp" />
+    <ClCompile Include="..\TestPcNetwork\g_tcpsession.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
